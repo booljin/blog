@@ -1,4 +1,4 @@
-baseURL = 'https://booljin.github.io/'
+baseURL = 'https://booljin.github.io/blog/'
 locale = 'zh-cn'
 title = 'Bool的博客'
 theme = 'congo'
