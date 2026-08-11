@@ -73,7 +73,7 @@ gaia->edge()->call(edge2, "cmd_name", buff2, sync);
 ret = gaia->edge()->wait(sync, 5000/* 超时时间 */);
 ```
 
-先回应一下 [上一篇的悬念](./gaia_03.md#send-call-domain)<!-- cross-ref: gaia_03 --> ，ArgusEdge 和 HeliosEquipment 的 send/call 同名但不同域。后者面向机台，前者面向边缘节点，两者 session 管理机制共通，但接口参数不同。
+先回应一下 [上一篇的悬念](./gaia-03.md#send-call-domain)<!-- cross-ref: gaia-03 --> ，ArgusEdge 和 HeliosEquipment 的 send/call 同名但不同域。后者面向机台，前者面向边缘节点，两者 session 管理机制共通，但接口参数不同。
 
 ## 0.4.3 基于 session id 的 call
 <pre>
@@ -119,7 +119,7 @@ uint32_t IPUSessionMgr::next_session_id() {
 ```
 
 #### assistant 线程在 call 中的价值
-正如 [第二篇](./gaia_02.md)<!-- cross-ref: gaia_02 --> 所言，assistant 是笔者针对 **时序不确定** 问题的解决方案。在 call 这个场景中有非常典型的应用。
+正如 [第二篇](./gaia-02.md)<!-- cross-ref: gaia-02 --> 所言，assistant 是笔者针对 **时序不确定** 问题的解决方案。在 call 这个场景中有非常典型的应用。
 
 session 管理模块中的多个数据都有竞争风险，比如 session_map，在网络消息、定时器逻辑中都要访问并修改。传统逻辑必须加锁。并且由于 *On Response* 事务和 *Check Timeout* 事务本身都比较复杂，为了保证事务原子性，锁的范围较大。
 

@@ -8,7 +8,7 @@ image: "https://cdn.booljin.top/images/gaia-logo.svg"
 ---
 
 ## 0.6.1 前端调用 API
-在[第五篇](./gaia_05.md#0.5.3)<!-- cross-ref: gaia_05 -->中，笔者提过将前后端彻底解耦，并且规划了多前端系统。前后端需要交互，自然需要API——API模块因此成为 Gaia framework中最基础的模块之一。
+在 [第五篇](./gaia-05.md#gaia-05-03)<!-- cross-ref: gaia-05 --> 中，笔者提过将前后端彻底解耦，并且规划了多前端系统。前后端需要交互，自然需要API——API模块因此成为 Gaia framework中最基础的模块之一。
 
 **只是第一版 API 非常简单**。
 
@@ -72,7 +72,7 @@ bool handle_func1(business::BusinessApiContext& ctx, const Func1Req& req, Func1R
     ctx->api_manager()->call_func2(ctx, func2_req);
 }
 ```
-这个和上例中唯一的区别是，此接口需要传入父调用的 ctx，这是让整个逻辑闭环的关键：它串起了 **三种 API 调用路径** 和 [上一篇](./gaia_05.md)<!-- cross-ref: gaia_05 -->中提到的 *notify收集器* 机制
+这个和上例中唯一的区别是，此接口需要传入父调用的 ctx，这是让整个逻辑闭环的关键：它串起了 **三种 API 调用路径** 和 [上一篇](./gaia-05.md)<!-- cross-ref: gaia-05 -->中提到的 *notify收集器* 机制
 
 ## 0.6.4 ctx：闭环的关键
 至此，API handler 的三种调用类型已经全部清楚：

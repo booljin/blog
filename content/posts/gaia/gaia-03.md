@@ -102,7 +102,7 @@ namespace helios{
 }
 ```
 
-有关assistant的内容，可以参考 [前一篇](./gaia_02.md)<!-- cross-ref: gaia_02 -->
+有关assistant的内容，可以参考 [前一篇](./gaia-02.md)<!-- cross-ref: gaia-02 -->
 
 开发人员只需要专注于 c++ 版本 handler 的编写
 ```c++

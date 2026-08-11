@@ -29,7 +29,7 @@ image: "https://cdn.booljin.top/images/gaia-logo.svg"
   <figcaption class="figure-caption">图1：DBCache的任务队列</figcaption>
 </figure>
 
-以 DBCache 的 service 部分为基础，笔者进一步开发了[harborRPC](https://github.com/booljin/harborRPC)这个项目并开源。这个项目旨在线程间解耦，除了提供消息队列和常规的消息注册外，还提供一组 **send/call** 语法，使服务调用像函数调用一样简单。其中 *send* 只发送请求，不等待结果，而 *call* 会阻塞等待执行结果。
+以 DBCache 的 service 部分为基础，笔者进一步开发了 [harborRPC](https://github.com/booljin/harborRPC) 这个项目并开源。这个项目旨在线程间解耦，除了提供消息队列和常规的消息注册外，还提供一组 **send/call** 语法，使服务调用像函数调用一样简单。其中 *send* 只发送请求，不等待结果，而 *call* 会阻塞等待执行结果。
 
 ```c++
 // 开发人员专注于逻辑，如MyService::func
