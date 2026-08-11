@@ -1,0 +1,91 @@
+{{ define "main" }}
+  <section class="flex flex-col max-w-4xl mx-auto px-4" style="background-color: #F1F5F9; padding-top: 24px; padding-bottom: 48px;">
+    
+    <h1 class="text-4xl font-extrabold text-neutral-900 dark:text-neutral" style="margin-bottom: 16px;">
+      {{ .Title }}
+    </h1>
+    
+    <!-- ================================================= -->
+    <!-- 【恢复分类与标签元数据】                          -->
+    <!-- ================================================= -->
+    <div style="margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+      {{ with .Params.categories }}
+        {{ range . }}
+          <a href="{{ "categories/" | relLangURL }}{{ . | urlize }}" 
+             style="background-color: #dbeafe; color: #1e40af; padding: 4px 12px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; text-decoration: none; transition: background-color 0.2s;">
+            📂 {{ . }}
+          </a>
+        {{ end }}
+      {{ end }}
+      
+      {{ with .Params.tags }}
+        {{ range . }}
+          <a href="{{ "tags/" | relLangURL }}{{ . | urlize }}" 
+             style="background-color: #e5e7eb; color: #374151; padding: 4px 12px; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; text-decoration: none; transition: background-color 0.2s;">
+            # {{ . }}
+          </a>
+        {{ end }}
+      {{ end }}
+    </div>
+
+    <!-- 正文白底卡片 -->
+    <div style="background-color: #FFFFFF; border: none !important; border-radius: 0.75rem; padding: 1.5rem; padding-top: 2rem;">
+      
+      <!-- ===== 折叠目录 ===== -->
+      <details class="mb-6 border-b border-neutral-200 pb-2 cursor-pointer group">
+        <summary class="list-none flex items-center justify-between font-bold text-sm text-neutral-500 hover:text-primary-500 transition-colors">
+          <span>📖 文章目录</span>
+          <span class="text-xs group-open:rotate-90 transition-transform">›</span>
+        </summary>
+        <div class="mt-4 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400 ml-2">
+          {{ .TableOfContents }}
+        </div>
+      </details>
+
+      <div class="prose dark:prose-invert max-w-none">
+        {{ .Content }}
+      </div>
+    </div>
+
+    <!-- ================================================= -->
+    <!-- 【智能上下篇导航】（已移除错误回退逻辑，无分类不显示） -->
+    <!-- ================================================= -->
+    {{ $currentCategory := index .Params.categories 0 }}
+    {{ $sameCategoryPages := where .Site.RegularPages "Params.categories" "intersect" (slice $currentCategory) }}
+    {{ $sortedCategoryPages := $sameCategoryPages.ByWeight }}
+
+    <!-- 只有当下文章有明确分类，且分类里至少有2篇文章时才渲染导航 -->
+    {{ if and (ne $currentCategory nil) (gt (len $sortedCategoryPages) 1) }}
+      <div class="mt-8 pt-6 border-t border-neutral-200 flex flex-col sm:flex-row justify-between gap-4">
+        {{ $currentIndex := 0 }}
+        {{ range $index, $page := $sortedCategoryPages }}
+          {{ if eq $page.RelPermalink $.RelPermalink }}
+            {{ $currentIndex = $index }}
+          {{ end }}
+        {{ end }}
+
+        {{ $prevPage := index $sortedCategoryPages (sub $currentIndex 1) }}
+        {{ $nextPage := index $sortedCategoryPages (add $currentIndex 1) }}
+
+        {{ if $prevPage }}
+        <a href="{{ $prevPage.RelPermalink }}" class="group flex flex-col rounded-lg bg-transparent p-4 hover:bg-[#f8fafc] transition-colors flex-1">
+          <span class="text-xs text-neutral-400 mb-1">← 上一篇</span>
+          <span class="text-neutral-700 group-hover:text-primary-500 truncate">{{ $prevPage.Title }}</span>
+        </a>
+        {{ else }}
+        <div class="flex-1"></div>
+        {{ end }}
+
+        {{ if $nextPage }}
+        <a href="{{ $nextPage.RelPermalink }}" class="group flex flex-col items-end rounded-lg bg-transparent p-4 hover:bg-[#f8fafc] transition-colors flex-1">
+          <span class="text-xs text-neutral-400 mb-1">下一篇 →</span>
+          <span class="text-neutral-700 group-hover:text-primary-500 truncate">{{ $nextPage.Title }}</span>
+        </a>
+        {{ else }}
+        <div class="flex-1"></div>
+        {{ end }}
+      </div>
+    {{ end }}
+
+  </section>
+{{ end }}

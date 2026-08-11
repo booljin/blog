@@ -1,0 +1,186 @@
+/* ================================================= */
+/* 第一部分：专题首页 term-page (保留你喜欢的模式，绝对不改动) */
+/* ================================================= */
+section.term-page {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 1.25rem !important;
+    margin-top: 2rem !important;
+}
+section.term-page > article {
+    background-color: #f9fafb !important;
+    border-radius: 0.75rem !important;
+    border: none !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08) !important;
+    display: flex !important;
+    align-items: stretch !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+/* 窄屏单列左图右文 */
+section.term-page > article > div {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 0.75rem !important;
+    gap: 1.25rem !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 0.75rem !important;
+}
+
+/* ================================================= */
+/* 【关键修复区：图片容器 + 图片本身样式】           */
+/* ================================================= */
+/* 窄屏时，图片容器宽 128px，强制 16:9，浅灰底色 */
+section.term-page > article > div > .w-32 {
+    width: 128px !important;
+    flex-shrink: 0 !important;
+    aspect-ratio: 16 / 9 !important;      /* 核心：强制 16:9 */
+    background-color: #E5E7EB !important; /* 核心：统一浅灰占位底色 */
+    border-radius: 0.375rem !important;
+}
+/* 宽屏网格 (640px及以上) */
+@media (min-width: 640px) {
+    section.term-page > article > div {
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 1.25rem !important;
+        gap: 0 !important;
+        text-align: center !important;
+    }
+    section.term-page > article > div .flex-col {
+        align-items: center !important;
+        padding: 0 !important;
+    }
+    /* 宽屏时，图片容器自动撑满，但限制最大宽度 300px */
+    section.term-page > article > div > .w-32 {
+        width: 100% !important;
+        max-width: 300px !important;
+        margin-bottom: 0.75rem !important; /* 图片下方的间距 */
+    }
+}
+/* 图片本身：填满容器，中心裁切，覆盖浅灰底色 */
+section.term-page > article > div img {
+    object-fit: cover !important;      /* 核心：强制填满且不拉伸变形 */
+    object-position: center !important; /* 核心：从正中心开始裁切 */
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+/* ================================================= */
+/* 【关键修复区结束】                                 */
+/* ================================================= */
+
+section.term-page > article > div .flex-col {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding: 0.25rem 0 !important;
+}
+section.term-page > article > div .flex-col a {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    line-height: 1.4 !important;
+    white-space: normal !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+}
+section.term-page > article > div .flex-col a:hover { color: #2563eb !important; }
+section.term-page > article > div .flex-col span {
+    font-size: 0.875rem !important;
+    color: #6b7280 !important;
+    margin-top: 0.15rem !important;
+}
+
+/* ================================================= */
+/* 第二部分：文章列表 & 详情页 （灰底白便签，无边框） */
+/* ================================================= */
+/* 强制列表页和详情页的底部容器背景为 #F1F5F9 */
+body.taxonomy section.flex-col,
+body.single .max-w-4xl {
+    background-color: #F1F5F9 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* ================================================= */
+/* 第三部分：文章详情页 single (统一白便签无边框)    */
+/* ================================================= */
+/* 用最强覆盖，去除详情页内原本的灰底和边框 */
+body.single .max-w-4xl > div {
+    background-color: #FFFFFF !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0.75rem !important;
+    padding: 1.25rem !important;
+}
+/* 保持正文文字颜色 */
+body.single .max-w-4xl > div .prose p {
+    color: #4b5563 !important;
+}
+
+/* ================================================= */
+/* 第四部分：撑宽专题页主内容区                      */
+/* ================================================= */
+body.taxonomy .max-w-7xl, body.single .max-w-7xl {
+    max-width: 100% !important;
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+}
+
+/* ================================================= */
+/* 以下是你之前其他页面的样式，保持原有              */
+/* ================================================= */
+article h3 a { font-size: 1.5rem !important; font-weight: 700 !important; }
+article h3 a:hover { color: #2563eb !important; }
+section > h2, section > hr { display: none !important; }
+article .content p {
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+    color: #4b5563 !important;
+    margin: 0.25rem 0 0 0 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+}
+
+/* ================================================= */
+/* 【已按你的要求：恢复 Congo 原生排版】             */
+/* ================================================= */
+.prose p { 
+    font-size: 1rem !important; 
+    line-height: 1.7 !important; 
+    color: #374151 !important; 
+}
+article header dl, article .flex span.text-primary-500 { display: none !important; }
+article h3 { 
+    border-bottom: 1px solid #d1d5db !important; 
+    padding-bottom: 0.5rem !important; 
+    margin-bottom: 0.75rem !important; 
+}
+
+/* 图片容器与脚注 */
+.img-figure { margin: 1.5rem auto !important; text-align: center !important; }
+.img-default { width: 100% !important; height: auto !important; border-radius: 0.5rem !important; }
+.img-original { width: auto !important; max-width: 100% !important; height: auto !important; border-radius: 0.5rem !important; }
+.figure-title { font-weight: 600 !important; margin-bottom: 0.5rem !important; font-size: 0.95rem !important; color: #374151 !important; }
+.figure-caption { margin-top: 0.5rem !important; font-size: 0.875rem !important; color: #6b7280 !important; }
+
+/* ================================================= */
+/* 终极全局修复：消除菜单跳动，统一全屏灰底          */
+/* ================================================= */
+html {
+    overflow-y: scroll !important;
+}
+body {
+    background-color: #F1F5F9 !important;
+}

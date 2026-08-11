@@ -1,0 +1,11 @@
+{{ define "main" }}
+  <section class="flex flex-col max-w-4xl mx-auto px-4 pb-10" style="background-color: #F1F5F9; padding-top: 24px;">
+    <h1 class="text-4xl font-extrabold text-neutral-900 dark:text-neutral" style="margin-bottom: 24px;">
+      {{ .Title }}
+    </h1>
+    <!-- 去掉 weight 后，专题系列改成纯按日期由远到近（旧文章在前） -->
+    {{ range .Pages.ByDate }}
+        {{ partial "article-card.html" . }}
+    {{ end }}
+  </section>
+{{ end }}

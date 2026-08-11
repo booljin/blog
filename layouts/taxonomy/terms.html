@@ -1,0 +1,34 @@
+{{ define "main" }}
+  <section class="flex flex-col max-w-4xl mx-auto px-4" style="background-color: #F1F5F9; padding-top: 24px; padding-bottom: 48px;">
+    <h1 class="text-4xl font-extrabold text-neutral-900 dark:text-neutral" style="margin-bottom: 24px;">
+      {{ .Title }}
+    </h1>
+    <section class="mx-2 flex flex-wrap overflow-hidden term-page">
+      {{ range .Data.Terms.Alphabetical }}
+        {{ $termPage := .Page }}
+        <article class="my-3 w-full overflow-hidden px-2 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5">
+          <div class="flex h-full items-center rounded-lg border border-neutral-200 bg-neutral-50 p-2 dark:border-neutral-700 dark:bg-neutral-800">
+            
+            <!-- 图片/占位容器：w-32 交给 CSS 接管 -->
+            <div class="w-32 sm:w-full mr-4 sm:mr-0 sm:mb-3 flex-shrink-0 overflow-hidden rounded">
+              {{ if $termPage.Params.image }}
+                <!-- 如果有图片，显示并裁切 -->
+                <img src="{{ $termPage.Params.image }}" alt="{{ $termPage.Title }}" class="w-full h-full object-cover object-center" />
+              {{ else }}
+                <!-- 如果没图片：塞入一个极小的元素强制撑开高度，使 CSS 的灰底能完美显现 -->
+                <div class="w-full h-full"></div>
+              {{ end }}
+            </div>
+
+            <div class="flex flex-col flex-1 min-w-0">
+              <a href="{{ $termPage.RelPermalink }}" class="text-xl font-medium decoration-primary-500 hover:underline hover:underline-offset-2 truncate">
+                {{ $termPage.Title }}
+              </a>
+              <span class="text-base text-neutral-400">{{ len $termPage.Pages }} 篇文章</span>
+            </div>
+          </div>
+        </article>
+      {{ end }}
+    </section>
+  </section>
+{{ end }}

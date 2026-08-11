@@ -1,0 +1,62 @@
+{{ define "main" }}
+  <section class="flex flex-col max-w-4xl mx-auto px-4" style="background-color: #F1F5F9; padding-top: 24px; padding-bottom: 48px;">
+    
+    <!-- 1. 顶部：个人简介大白卡（融合了“关于”的内容） -->
+    <div style="background-color: #FFFFFF; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 24px;">
+      <h1 style="font-size: 2.25rem; font-weight: 800; color: #111827; margin-bottom: 4px;">Bool 的博客</h1>
+      <div style="color: #4b5563; line-height: 1.8; max-width: 650px; margin-top: 8px;">
+        <p style="margin-bottom: 12px;">
+          他是一个程序员，一个游戏玩家，一个乐高迷，一个高达模友，一个历史爱好者，一个兴趣盎然的人。
+        </p>
+        <p style="font-size: 0.95rem; margin-top: 8px;">
+          📮 联系我：<a href="mailto:booljin@163.com" style="color: #3b82f6; text-decoration: none;">booljin@163.com</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- 2. 中部：分类入口导航卡 -->
+    <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 16px; margin-bottom: 24px;">
+      <style>
+        @media (min-width: 768px) {
+          .nav-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+      </style>
+      <div class="nav-grid" style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 16px;">
+
+        <!-- 卡片 1：笔记 -->
+        <a href="{{ "tags/笔记" | relLangURL }}" 
+           style="background-color: #FFFFFF; border-radius: 0.75rem; padding: 1.5rem; text-decoration: none; transition: transform 0.2s; display: flex; flex-direction: column;" 
+           onmouseover="this.style.transform='translateY(-2px)'" 
+           onmouseout="this.style.transform='translateY(0)'">
+          <div style="font-size: 1.5rem; font-weight: 700; color: #111827; margin-bottom: 6px;">📘 笔记</div>
+          <p style="font-size: 0.9rem; color: #6b7280; line-height: 1.5; margin: 0;">一个工程师的自我修养</p>
+        </a>
+
+        <!-- 卡片 2：随笔 -->
+        <a href="{{ "tags/随笔" | relLangURL }}" 
+           style="background-color: #FFFFFF; border-radius: 0.75rem; padding: 1.5rem; text-decoration: none; transition: transform 0.2s; display: flex; flex-direction: column;" 
+           onmouseover="this.style.transform='translateY(-2px)'" 
+           onmouseout="this.style.transform='translateY(0)'">
+          <div style="font-size: 1.5rem; font-weight: 700; color: #111827; margin-bottom: 6px;">📝 随笔</div>
+          <p style="font-size: 0.9rem; color: #6b7280; line-height: 1.5; margin: 0;">歌以咏志，不知所言</p>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- 3. 底部：最新更新大白卡 -->
+    <div style="background-color: #FFFFFF; border-radius: 0.75rem; padding: 1.5rem;">
+      <h2 style="font-size: 1.5rem; font-weight: 700; color: #111827; margin-top: 0; margin-bottom: 16px;">最近更新</h2>
+      
+      <!-- 【核心修复】：加上了 .ByDate.Reverse，强制按日期从新到旧取前 3 篇 -->
+      {{ range first 3 (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
+          {{ partial "article-card.html" . }}
+      {{ end }}
+      
+      <div style="margin-top: 16px; text-align: right;">
+        <a href="{{ "posts" | relLangURL }}" style="font-size: 0.875rem; color: #3b82f6; text-decoration: none; font-weight: 500;">查看所有文章 →</a>
+      </div>
+    </div>
+
+  </section>
+{{ end }}

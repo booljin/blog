@@ -1,0 +1,17 @@
+{{ define "main" }}
+  <section class="flex flex-col max-w-4xl mx-auto px-4 pb-10" style="background-color: #F1F5F9; padding-top: 24px;">
+    <h1 class="text-4xl font-extrabold text-neutral-900 dark:text-neutral" style="margin-bottom: 24px;">
+      {{ .Title }}
+    </h1>
+    
+    <!-- 删除了所有文章的 weight 后，分页器默认就会按日期降序（最新在前）自动排序 -->
+    {{ $paginator := .Paginate (where .Site.RegularPages "Section" "posts") }}
+    
+    {{ range $paginator.Pages }}
+        {{ partial "article-card.html" . }}
+    {{ end }}
+    
+    <!-- 原生分页组件 -->
+    {{ partial "pagination.html" . }}
+  </section>
+{{ end }}

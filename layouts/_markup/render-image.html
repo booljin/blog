@@ -1,0 +1,11 @@
+<figure class="img-figure{{ with .Attributes.class }} {{ . }}{{ end }}">
+  {{- with .Title }}
+  <figcaption class="figure-title">{{ . }}</figcaption>
+  {{- end }}
+  <img src="{{ .Destination | safeURL }}" 
+       {{- with .PlainText }} alt="{{ . }}"{{ end -}}
+       class="{{ with .Attributes.class }}{{ . }}{{ else }}img-default{{ end }}">
+  {{- with .Attributes.caption }}
+  <figcaption class="figure-caption">{{ . }}</figcaption>
+  {{- end }}
+</figure>
