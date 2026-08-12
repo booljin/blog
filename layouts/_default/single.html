@@ -48,24 +48,27 @@
     </div>
 
     <!-- ================================================= -->
-    <!-- 【智能上下篇导航】（已移除错误回退逻辑，无分类不显示） -->
+    <!-- 【智能上下篇导航】 - 最终纯净彻底分离版           -->
     <!-- ================================================= -->
-    {{ $currentCategory := index .Params.categories 0 }}
-    {{ $sameCategoryPages := where .Site.RegularPages "Params.categories" "intersect" (slice $currentCategory) }}
-    {{ $sortedCategoryPages := $sameCategoryPages.ByWeight }}
+    <div class="mt-8 pt-6 border-t border-neutral-200 flex flex-col sm:flex-row justify-between gap-4">
+      
+      {{ $currentCategory := index .Params.categories 0 }}
 
-    <!-- 只有当下文章有明确分类，且分类里至少有2篇文章时才渲染导航 -->
-    {{ if and (ne $currentCategory nil) (gt (len $sortedCategoryPages) 1) }}
-      <div class="mt-8 pt-6 border-t border-neutral-200 flex flex-col sm:flex-row justify-between gap-4">
+      {{/* ===== 分支 A：如果文章有分类（如 Gaia系列） ===== */}}
+      {{ if $currentCategory }}
+        {{/* 锁定在同一分类内，按时间由早到晚（升序）流动 */}}
+        {{ $categoryPages := where .Site.RegularPages "Params.categories" "intersect" (slice $currentCategory) }}
+        {{ $sortedPages := sort $categoryPages "Date" "asc" }}
+        
         {{ $currentIndex := 0 }}
-        {{ range $index, $page := $sortedCategoryPages }}
+        {{ range $index, $page := $sortedPages }}
           {{ if eq $page.RelPermalink $.RelPermalink }}
             {{ $currentIndex = $index }}
           {{ end }}
         {{ end }}
 
-        {{ $prevPage := index $sortedCategoryPages (sub $currentIndex 1) }}
-        {{ $nextPage := index $sortedCategoryPages (add $currentIndex 1) }}
+        {{ $prevPage := index $sortedPages (sub $currentIndex 1) }}
+        {{ $nextPage := index $sortedPages (add $currentIndex 1) }}
 
         {{ if $prevPage }}
         <a href="{{ $prevPage.RelPermalink }}" class="group flex flex-col rounded-lg bg-transparent p-4 hover:bg-[#f8fafc] transition-colors flex-1">
@@ -84,8 +87,45 @@
         {{ else }}
         <div class="flex-1"></div>
         {{ end }}
-      </div>
-    {{ end }}
+
+      {{/* ===== 分支 B：如果文章没有任何分类（独立文章） ===== */}}
+      {{ else }}
+        {{/* 第一步：严格筛选出所有【完全没有 categories 字段】的独立文章 */}}
+        {{ $allPages := where .Site.RegularPages "Section" "posts" }}
+        {{ $uncategorizedPages := where $allPages "Params.categories" nil }}
+        {{/* 按时间由近到远（降序）排列 */}}
+        {{ $sortedPages := sort $uncategorizedPages "Date" "desc" }}
+        
+        {{ $currentIndex := 0 }}
+        {{ range $index, $page := $sortedPages }}
+          {{ if eq $page.RelPermalink $.RelPermalink }}
+            {{ $currentIndex = $index }}
+          {{ end }}
+        {{ end }}
+
+        {{ $prevPage := index $sortedPages (sub $currentIndex 1) }}
+        {{ $nextPage := index $sortedPages (add $currentIndex 1) }}
+
+        {{ if $prevPage }}
+        <a href="{{ $prevPage.RelPermalink }}" class="group flex flex-col rounded-lg bg-transparent p-4 hover:bg-[#f8fafc] transition-colors flex-1">
+          <span class="text-xs text-neutral-400 mb-1">← 上一篇</span>
+          <span class="text-neutral-700 group-hover:text-primary-500 truncate">{{ $prevPage.Title }}</span>
+        </a>
+        {{ else }}
+        <div class="flex-1"></div>
+        {{ end }}
+
+        {{ if $nextPage }}
+        <a href="{{ $nextPage.RelPermalink }}" class="group flex flex-col items-end rounded-lg bg-transparent p-4 hover:bg-[#f8fafc] transition-colors flex-1">
+          <span class="text-xs text-neutral-400 mb-1">下一篇 →</span>
+          <span class="text-neutral-700 group-hover:text-primary-500 truncate">{{ $nextPage.Title }}</span>
+        </a>
+        {{ else }}
+        <div class="flex-1"></div>
+        {{ end }}
+      {{ end }}
+
+    </div>
 
   </section>
 {{ end }}
