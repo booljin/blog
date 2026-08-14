@@ -2,7 +2,7 @@
 title: "0.5 HermesGateway：用 cmd 和 notify 彻底解耦前后端"
 date: 2026-07-17
 categories: ["Gaia系列"]
-tags: ["Gaia", "C++", "架构设计", "笔记"]
+tags: ["笔记", "C++", "架构设计"]
 draft: false
 image: "https://cdn.booljin.top/images/gaia-logo.svg"
 ---

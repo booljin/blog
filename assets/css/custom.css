@@ -184,3 +184,13 @@ html {
 body {
     background-color: #F1F5F9 !important;
 }
+
+/* ================================================= */
+/* 新增修复：移除 Markdown 引用块两端的双引号        */
+/* ================================================= */
+.prose blockquote::before,
+.prose blockquote::after,
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+    content: none !important;
+}

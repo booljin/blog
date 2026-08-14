@@ -1,10 +1,7 @@
 colorScheme = "ocean"
 defaultAppearance = "light"
-autoSwitchAppearance = true
+autoSwitchAppearance = false
 
-homepage.layout = "page"
-homepage.showRecent = true
-homepage.recentLimit = 10
 mainSections = ["posts"]
 
 header.layout = "hybrid"
@@ -20,8 +17,3 @@ article.showReadingTime = true
 [author]
 name = "Bool"
 bio = "技术博客作者"
-
-[list]
-showSummary = true
-summaryLength = 10
-groupByYear = true

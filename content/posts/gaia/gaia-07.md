@@ -2,7 +2,7 @@
 title: "0.7 AthenaAPI（其二）：ApiManager 和 MOC 细节"
 date: 2026-07-30
 categories: ["Gaia系列"]
-tags: ["Gaia", "C++", "架构设计", "笔记"]
+tags: ["笔记", "C++", "架构设计"]
 draft: false
 image: "https://cdn.booljin.top/images/gaia-logo.svg"
 ---

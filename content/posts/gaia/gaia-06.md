@@ -2,7 +2,7 @@
 title: "0.6 AthenaAPI（其一）：API模块的演进"
 date: 2026-07-29
 categories: ["Gaia系列"]
-tags: ["Gaia", "C++", "架构设计", "笔记"]
+tags: ["笔记", "C++", "架构设计"]
 draft: false
 image: "https://cdn.booljin.top/images/gaia-logo.svg"
 ---

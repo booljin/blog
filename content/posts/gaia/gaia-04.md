@@ -2,7 +2,7 @@
 title: "0.4 ArgusEdge：用 send/call 隐藏会话管理细节"
 date: 2026-07-16
 categories: ["Gaia系列"]
-tags: ["Gaia", "C++", "架构设计", "笔记"]
+tags: ["笔记", "C++", "架构设计"]
 draft: false
 image: "https://cdn.booljin.top/images/gaia-logo.svg"
 ---
