@@ -48,7 +48,7 @@
     </div>
 
     <!-- ================================================= -->
-    <!-- 【智能上下篇导航】 - 最终纯净彻底分离版           -->
+    <!-- 【智能上下篇导航】 - 支持 sort_order 控制版（修复了作用域报错） -->
     <!-- ================================================= -->
     <div class="mt-8 pt-6 border-t border-neutral-200 flex flex-col sm:flex-row justify-between gap-4">
       
@@ -56,9 +56,19 @@
 
       {{/* ===== 分支 A：如果文章有分类（如 Gaia系列） ===== */}}
       {{ if $currentCategory }}
-        {{/* 锁定在同一分类内，按时间由早到晚（升序）流动 */}}
+        {{/* 1. 获取该分类对应的页面对象（就是那个 _index.md） */}}
+        {{ $categoryPage := $.Site.GetPage (printf "/categories/%s" $currentCategory) }}
+        {{/* 2. 读取配置的 sort_order，默认设为空 */}}
+        {{ $sortOrder := $categoryPage.Params.sort_order | default "" }}
+
+        {{/* 3. 锁定在同一分类内 */}}
         {{ $categoryPages := where .Site.RegularPages "Params.categories" "intersect" (slice $currentCategory) }}
-        {{ $sortedPages := sort $categoryPages "Date" "asc" }}
+
+        {{/* 4. 【修复点】声明变量并赋默认值（降序），然后在 if 里重新赋值 */}}
+        {{ $sortedPages := sort $categoryPages "Date" "desc" }}
+        {{ if eq $sortOrder "asc" }}
+          {{ $sortedPages = sort $categoryPages "Date" "asc" }}
+        {{ end }}
         
         {{ $currentIndex := 0 }}
         {{ range $index, $page := $sortedPages }}
@@ -90,10 +100,9 @@
 
       {{/* ===== 分支 B：如果文章没有任何分类（独立文章） ===== */}}
       {{ else }}
-        {{/* 第一步：严格筛选出所有【完全没有 categories 字段】的独立文章 */}}
+        {{/* 严格筛选出完全没有 categories 字段的独立文章，按时间由近到远（降序） */}}
         {{ $allPages := where .Site.RegularPages "Section" "posts" }}
         {{ $uncategorizedPages := where $allPages "Params.categories" nil }}
-        {{/* 按时间由近到远（降序）排列 */}}
         {{ $sortedPages := sort $uncategorizedPages "Date" "desc" }}
         
         {{ $currentIndex := 0 }}

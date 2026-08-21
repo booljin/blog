@@ -3,9 +3,21 @@
     <h1 class="text-4xl font-extrabold text-neutral-900 dark:text-neutral" style="margin-bottom: 24px;">
       {{ .Title }}
     </h1>
-    <!-- 去掉 weight 后，专题系列改成纯按日期由远到近（旧文章在前） -->
-    {{ range .Pages.ByDate }}
-        {{ partial "article-card.html" . }}
+    
+    <!-- ===== 新增智能排序逻辑 ===== -->
+    <!-- 默认如果没设置 sort_order，或者设置为 "desc"，则按由近到远（降序） -->
+    {{ if eq .Params.sort_order "asc" }}
+      <!-- 专题明确设为由远到近（升序），适合固定序号的系列 -->
+      {{ range .Pages.ByDate }}
+          {{ partial "article-card.html" . }}
+      {{ end }}
+    {{ else }}
+      <!-- 专题未设置，或设置为由近到远（降序），适合持续更新的独立文集 -->
+      {{ range .Pages.ByDate.Reverse }}
+          {{ partial "article-card.html" . }}
+      {{ end }}
     {{ end }}
+    <!-- ================================== -->
+
   </section>
 {{ end }}
