@@ -17,8 +17,15 @@ home = ["HTML", "RSS", "JSON"]
     [markup.goldmark.extensions]
       [markup.goldmark.extensions.attributes]
         enabled = true
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+      [markup.goldmark.extensions.passthrough.delimiters]
+        block = [['\[', '\]'], ['$$', '$$']]
+        inline = [['\(', '\)'], ['$', '$']]
 
 [params]
+  math = false
+  
   # 全局开启卡片视图（对所有列表页有效，包括分类和标签）
   [params.list]
     cardView = true
